@@ -1,25 +1,43 @@
 package com.raduq.statistics.model;
 
+import static java.time.temporal.ChronoUnit.SECONDS;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+import com.raduq.statistics.exception.TransactionTimeoutException;
+
 public class Transaction {
 
-	private Double amount;
-	private Long timestamp;
+	private static final int TIMEOUT = 60;
 
-	public Transaction(){}
+	private Event event;
 
-	public Double getAmount() {
-		return amount;
+	public Transaction(Event event) {
+		this.event = validate( event );
 	}
 
-	public void setAmount(Double amount) {
-		this.amount = amount;
+	public Event get() {
+		return this.event;
 	}
 
-	public Long getTimestamp() {
-		return timestamp;
+	private Event validate(Event transaction) {
+		LocalDateTime timestamp = getLocalDateTime( transaction.getTimestamp() );
+		LocalDateTime timeout = getTimeout();
+
+		if (Duration.between( timestamp, timeout ).getSeconds() > TIMEOUT)
+			throw new TransactionTimeoutException( transaction.getTimestamp() );
+
+		return transaction;
 	}
 
-	public void setTimestamp(Long timestamp) {
-		this.timestamp = timestamp;
+	private LocalDateTime getLocalDateTime(Long timestamp) {
+		return LocalDateTime.ofInstant( Instant.ofEpochMilli( timestamp ), ZoneOffset.UTC );
+	}
+
+	private LocalDateTime getTimeout() {
+		return LocalDateTime.now( ZoneOffset.UTC ).plus( TIMEOUT, SECONDS );
 	}
 }
