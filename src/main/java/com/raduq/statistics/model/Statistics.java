@@ -13,6 +13,9 @@ public class Statistics {
 	private Double min;
 	private Long count;
 
+	public Statistics() {
+	}
+
 	public Statistics(DoubleSummaryStatistics summary) {
 		this.sum = summary.getSum();
 		this.avg = summary.getAverage();

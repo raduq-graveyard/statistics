@@ -2,7 +2,6 @@ package com.raduq.statistics.model;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -44,7 +43,4 @@ public class Transaction {
 		return Instant.ofEpochMilli( timestamp ).atOffset( ZoneOffset.UTC ).toLocalDateTime();
 	}
 
-	private LocalDateTime getTimeout() {
-		return LocalDateTime.now( ZoneOffset.UTC ).plus( TIMEOUT, SECONDS );
-	}
 }
