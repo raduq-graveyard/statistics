@@ -1,4 +1,4 @@
-package com.raduq.statistics.model;
+package com.raduq.statistics.service;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -12,10 +12,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.raduq.statistics.data.Datastore;
 import com.raduq.statistics.exception.TransactionTimeoutException;
-import com.sun.org.glassfish.external.statistics.Statistic;
+import com.raduq.statistics.model.Event;
 
-public class StatisticsTest {
+public class TransactionServiceTest {
 
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
@@ -25,10 +26,9 @@ public class StatisticsTest {
 		thrown.expect( TransactionTimeoutException.class );
 		thrown.expectMessage( "The transaction's timestamp 1478192204000 is older than 60 seconds" );
 
-		Statistics stats = new Statistics().accept(
-				new Transaction( new Event( 10.0D, 1478192204000L ) ) );
+		new TransactionService().save( new Event( 10.0D, 1478192204000L ) );
 
-		Assert.assertTrue( stats.getData().isEmpty() );
+		Assert.assertTrue( Datastore.getInstance().getData().isEmpty() );
 	}
 
 	@Test
@@ -36,20 +36,20 @@ public class StatisticsTest {
 		thrown.expect( TransactionTimeoutException.class );
 		Long expiredTime = LocalDateTime.now().plus( 61, SECONDS ).toInstant( ZoneOffset.UTC ).toEpochMilli();
 
-		Statistics stats = new Statistics().accept( new Transaction( new Event( 10.0D, expiredTime ) ) );
+		new TransactionService().save( new Event( 10.0D, expiredTime ) );
 
-		Assert.assertTrue( stats.getData().isEmpty() );
+		Assert.assertTrue( Datastore.getInstance().getData().isEmpty() );
 	}
 
 	@Test
 	public void canAcceptNewerThanTimeout() {
-		Statistics stats = new Statistics().accept( new Transaction( new Event( 10.0D, new Date().getTime() ) ) );
+		new TransactionService().save( new Event( 10.0D, new Date().getTime() ) );
 
-		Assert.assertThat( stats.getData().size(), equalTo( 1 ) );
+		Assert.assertThat( Datastore.getInstance().getData().size(), equalTo( 1 ) );
 	}
 
 	@Test
 	public void canGetData() {
-		Assert.assertNotNull( new Statistics().getData() );
+		Assert.assertNotNull( Datastore.getInstance().getData() );
 	}
 }

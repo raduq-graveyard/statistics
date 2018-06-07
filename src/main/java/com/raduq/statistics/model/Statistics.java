@@ -1,23 +1,41 @@
 package com.raduq.statistics.model;
 
-import java.util.concurrent.ConcurrentNavigableMap;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.DoubleSummaryStatistics;
 
 public class Statistics {
 
-	private ConcurrentNavigableMap<Long, Double> data;
+	private Double sum;
+	private Double avg;
+	private Double max;
+	private Double min;
+	private Long count;
 
-	public Statistics() {
-		this.data = new ConcurrentSkipListMap<>();
+	public Statistics(DoubleSummaryStatistics summary) {
+		this.sum = summary.getSum();
+		this.avg = summary.getAverage();
+		this.min = summary.getMin();
+		this.max = summary.getMax();
+		this.count = summary.getCount();
 	}
 
-	public Statistics accept(Transaction transaction) {
-		Event event = transaction.get();
-		data.put( event.getTimestamp(), event.getAmount() );
-		return this;
+	public Double getSum() {
+		return sum;
 	}
 
-	public ConcurrentNavigableMap<Long, Double> getData() {
-		return this.data;
+	public Double getAvg() {
+		return avg;
 	}
+
+	public Double getMax() {
+		return max;
+	}
+
+	public Double getMin() {
+		return min;
+	}
+
+	public Long getCount() {
+		return count;
+	}
+
 }

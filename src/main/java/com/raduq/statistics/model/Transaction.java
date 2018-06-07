@@ -19,8 +19,12 @@ public class Transaction {
 		this.event = validate( event );
 	}
 
-	public Event get() {
-		return this.event;
+	public Long getTimestamp() {
+		return this.event.getTimestamp();
+	}
+
+	public Double getAmount() {
+		return this.event.getAmount();
 	}
 
 	private Event validate(Event transaction) {
