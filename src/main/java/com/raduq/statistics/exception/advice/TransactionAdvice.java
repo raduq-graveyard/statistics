@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.raduq.statistics.exception.TransactionTimeoutException;
 
+/**
+ * Advice to handle exceptions automatically
+ */
 @ControllerAdvice
 public class TransactionAdvice {
 

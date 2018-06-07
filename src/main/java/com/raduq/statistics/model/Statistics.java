@@ -2,6 +2,9 @@ package com.raduq.statistics.model;
 
 import java.util.DoubleSummaryStatistics;
 
+/**
+ * Represents a Statistics object that will be returned via rest
+ */
 public class Statistics {
 
 	private Double sum;

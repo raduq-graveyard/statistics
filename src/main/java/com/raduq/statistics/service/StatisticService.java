@@ -15,12 +15,18 @@ import org.springframework.stereotype.Service;
 import com.raduq.statistics.model.Statistics;
 import com.raduq.statistics.model.Transaction;
 
+/**
+ * Service who handle statistics
+ */
 @Service
 public class StatisticService {
 
 	@Autowired
 	private StorageService storageService;
 
+	/**
+	 * Returns statistics
+	 */
 	public Statistics get() {
 		ConcurrentNavigableMap<Long, Double> data = storageService.getData();
 

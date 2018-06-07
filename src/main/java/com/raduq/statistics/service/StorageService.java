@@ -7,6 +7,10 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * IN memory storage.
+ * Made as a service to facilitate mocking
+ */
 @Service
 public class StorageService {
 

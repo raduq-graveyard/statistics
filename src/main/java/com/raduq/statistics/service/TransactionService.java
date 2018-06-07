@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import com.raduq.statistics.model.Event;
 import com.raduq.statistics.model.Transaction;
 
+/**
+ * Service who handles transaction saving
+ */
 @Service
 public class TransactionService {
 

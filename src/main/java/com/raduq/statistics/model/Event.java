@@ -2,6 +2,9 @@ package com.raduq.statistics.model;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * A non validated transaction event
+ */
 public class Event {
 
 	@NotNull(message = "No amount was received in the transaction")

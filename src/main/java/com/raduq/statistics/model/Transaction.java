@@ -9,6 +9,9 @@ import java.time.ZoneOffset;
 
 import com.raduq.statistics.exception.TransactionTimeoutException;
 
+/**
+ * Represents a Transaction of an Validated Event.
+ */
 public class Transaction {
 
 	public static final int TIMEOUT = 60;
