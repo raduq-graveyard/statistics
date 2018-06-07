@@ -11,7 +11,7 @@ import com.raduq.statistics.exception.TransactionTimeoutException;
 
 public class Transaction {
 
-	private static final int TIMEOUT = 60;
+	public static final int TIMEOUT = 60;
 
 	private Event event;
 
