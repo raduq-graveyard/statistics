@@ -10,7 +10,7 @@ import com.raduq.statistics.model.Statistics;
 import com.raduq.statistics.service.StatisticService;
 
 @RestController
-@RequestMapping(value = "transactions")
+@RequestMapping(value = "statistics")
 public class StatisticController {
 
 	@Autowired

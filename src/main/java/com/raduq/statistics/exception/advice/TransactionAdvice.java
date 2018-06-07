@@ -14,7 +14,6 @@ public class TransactionAdvice {
 
 	@ExceptionHandler(TransactionTimeoutException.class)
 	public final ResponseEntity handleTransactionTimeout() {
-		System.out.println("Deu timeout");
 		return ResponseEntity.noContent().build();
 	}
 

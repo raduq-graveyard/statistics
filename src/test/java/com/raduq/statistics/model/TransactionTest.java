@@ -31,7 +31,7 @@ public class TransactionTest {
 
 		LocalDateTime now = LocalDateTime.now();
 
-		new Transaction( new Event( 10.0D, now.plus( 61, SECONDS ).toInstant( ZoneOffset.UTC ).toEpochMilli() ) );
+		new Transaction( new Event( 10.0D, now.minus( 61, SECONDS ).toInstant( ZoneOffset.UTC ).toEpochMilli() ) );
 	}
 
 	@Test

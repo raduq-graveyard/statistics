@@ -28,17 +28,17 @@ public class Transaction {
 	}
 
 	private Event validate(Event transaction) {
-		LocalDateTime timestamp = getLocalDateTime( transaction.getTimestamp() );
-		LocalDateTime timeout = getTimeout();
+		LocalDateTime timestamp = getDateTime( transaction.getTimestamp() );
+		LocalDateTime timedout = LocalDateTime.now( ZoneOffset.UTC ).minus( TIMEOUT, SECONDS );
 
-		if (Duration.between( timestamp, timeout ).getSeconds() > TIMEOUT)
+		if (timestamp.isBefore( timedout ) || timestamp.isEqual( timedout ))
 			throw new TransactionTimeoutException( transaction.getTimestamp() );
 
 		return transaction;
 	}
 
-	private LocalDateTime getLocalDateTime(Long timestamp) {
-		return LocalDateTime.ofInstant( Instant.ofEpochMilli( timestamp ), ZoneOffset.UTC );
+	private LocalDateTime getDateTime(Long timestamp) {
+		return Instant.ofEpochMilli( timestamp ).atOffset( ZoneOffset.UTC ).toLocalDateTime();
 	}
 
 	private LocalDateTime getTimeout() {
