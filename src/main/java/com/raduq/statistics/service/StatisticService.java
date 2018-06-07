@@ -9,17 +9,20 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.raduq.statistics.data.Datastore;
 import com.raduq.statistics.model.Statistics;
 import com.raduq.statistics.model.Transaction;
 
 @Service
 public class StatisticService {
 
+	@Autowired
+	private StorageService storageService;
+
 	public Statistics get() {
-		ConcurrentNavigableMap<Long, Double> data = Datastore.getInstance().getData();
+		ConcurrentNavigableMap<Long, Double> data = storageService.getData();
 
 		LocalDateTime now = LocalDateTime.now( ZoneOffset.UTC );
 		Long from = now.minus( Transaction.TIMEOUT, SECONDS ).toInstant( ZoneOffset.UTC ).toEpochMilli();
